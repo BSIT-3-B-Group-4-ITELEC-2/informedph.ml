@@ -6,3 +6,6 @@ httpx==0.28.1
 fastapi==0.148.0
 uvicorn==0.54.0
 dependency-injector==4.49.1
+pydantic==2.14.1
+google-genai==2.33.0
+python-dotenv==1.2.4
