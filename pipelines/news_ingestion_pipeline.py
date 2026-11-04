@@ -20,7 +20,7 @@ class NewsIngestionPipeline:
         self.__rappler_rss_scraper = rappler_rss_scraper
         self.__gma_nation_archive_webpage_scraper = gma_nation_archive_webpage_scraper
 
-    async def execute(self) -> list[Article]:
+    async def execute(self) -> list[dict]:
         results = await asyncio.gather(
             *[
                 self.__gma_rss_scraper.extract_articles(),
@@ -46,4 +46,14 @@ class NewsIngestionPipeline:
             )
         ]
 
-        return recent_articles
+        mapped_articles = [
+            {
+                "title": article.title,
+                "url": str(article.url),
+                "content": article.content,
+                "published_at": article.published_at,
+            }
+            for article in recent_articles
+        ]
+
+        return mapped_articles
