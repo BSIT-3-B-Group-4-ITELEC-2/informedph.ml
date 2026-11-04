@@ -18,7 +18,7 @@ class GMARssScraper:
             "https://data.gmanetwork.com/gno/rss/scitech/science/feed.xml",
         ]
 
-        self.__MAX_CONCURRENT_REQUESTS = 5
+        self.__MAX_CONCURRENT_REQUESTS = 10
 
     async def __fetch_feed(self, client, url, semaphore) -> list[dict] | list:
         try:

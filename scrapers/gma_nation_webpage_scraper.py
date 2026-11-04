@@ -20,7 +20,7 @@ class GMANationArchiveWebPageScraper:
         self.__URL = "https://www.gmanetwork.com/news/archives/news-nation/"
         self.__ARTICLE_PATTERN = re.compile(r"^/news/topstories/nation/\d+/.+/story/?$")
         self.__PH_TIMEZONE = ZoneInfo("Asia/Manila")
-        self.__MAX_CONCURRENT_DOWNLOADS = 10
+        self.__MAX_CONCURRENT_DOWNLOADS = 15
 
     def __get_published_at(self, html_content: str) -> str | None:
         soup = BeautifulSoup(html_content, "html.parser")

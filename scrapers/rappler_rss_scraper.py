@@ -11,7 +11,7 @@ class RapplerRssScraper:
     def __init__(self) -> None:
         self.__RSS_URL_LIST = ["https://www.rappler.com/feed/"]
 
-        self.__MAX_CONCURRENT_REQUESTS = 5
+        self.__MAX_CONCURRENT_REQUESTS = 10
 
     async def __fetch_feed(self, client, url, semaphore) -> list[dict] | list:
         try:
