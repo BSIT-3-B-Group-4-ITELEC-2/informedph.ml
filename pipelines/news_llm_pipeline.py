@@ -3,6 +3,7 @@ from llm.news_summarizer import NewsSummarizer
 from models.classification import ClassificationResponse
 from models.summary import SummarizationResponse
 from models.news import ProcessedNews, NewsLLMPipelineResponse
+from utils.url_string_converter import url_string_converter
 
 
 class NewsLLMPipeline:
@@ -88,6 +89,7 @@ class NewsLLMPipeline:
                     summary=result.summary,
                     explanation=result.explanation,
                     published_at=original_article.get("published_at"),
+                    url=url_string_converter(original_article.get("url")),
                 )
             )
 
