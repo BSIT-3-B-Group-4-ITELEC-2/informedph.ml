@@ -46,6 +46,8 @@ class NewsIngestionPipeline:
             )
         ]
 
+        deduplicated_articles = self.__remove_duplicate_articles(recent_articles)
+
         mapped_articles = [
             {
                 "title": article.title,
@@ -53,9 +55,28 @@ class NewsIngestionPipeline:
                 "content": article.content,
                 "published_at": article.published_at,
             }
-            for article in recent_articles[
+            for article in deduplicated_articles[
                 :50
             ]  # Limit to 50 articles only due to only free model is used to process the articles
         ]
 
         return mapped_articles
+
+    def __remove_duplicate_articles(
+        self,
+        articles: list[Article],
+    ) -> list[Article]:
+
+        unique_articles = []
+        seen_urls = set()
+
+        for article in articles:
+            url = article.url
+
+            if url in seen_urls:
+                continue
+
+            unique_articles.append(article)
+            seen_urls.add(url)
+
+        return unique_articles
