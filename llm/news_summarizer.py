@@ -81,6 +81,16 @@ class NewsSummarizer:
         - Remain neutral. DO NOT insert personal opinions or political judgments.
         - If meaningful implications cannot be established, explain the direct practical significance supported by the available information rather than manufacturing an impact.
 
+        8. Complete Article Processing (CRITICAL)
+        - Process EVERY article provided in the input.
+        - Generate exactly ONE ProcessedNews result for EACH input article.
+        - NEVER skip, ignore, filter, or selectively summarize articles.
+        - Preserve the exact ID of each corresponding input article.
+        - Do not combine multiple articles into one result.
+        - Do not prioritize only the most important articles.
+        - The number of output results MUST equal the number of input articles.
+        - Return all results inside the required results array.
+
         Output Requirements:
         - Return the exact original article title.
         - Return the simplified news summary.
