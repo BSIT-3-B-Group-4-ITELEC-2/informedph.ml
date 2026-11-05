@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 
 
 class ProcessedNews(BaseModel):
@@ -8,6 +8,7 @@ class ProcessedNews(BaseModel):
     summary: str
     explanation: str
     published_at: datetime | None
+    url: HttpUrl
 
 
 class NewsLLMPipelineResponse(BaseModel):
