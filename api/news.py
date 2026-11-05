@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from dependency_injector.wiring import Provide, inject
 from containers.container import Container
 from pipelines.news_ingestion_pipeline import NewsIngestionPipeline
@@ -20,7 +20,36 @@ async def get_articles(
         Depends(Provide[Container.news_llm_pipeline]),
     ],
 ):
-    articles = await ingestion_pipeline.execute()
-    processed_news = await llm_pipeline.execute(articles)
+    try:
+        articles = await ingestion_pipeline.execute()
 
-    return processed_news
+        print("Article Count: ", len(articles))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "success": False,
+                "message": "Failed to retrieve news articles.",
+                "error": str(e),
+            },
+        )
+
+    try:
+        processed_news = await llm_pipeline.execute(articles)
+
+        print("Processed Articles: ", processed_news)
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "success": False,
+                "message": "Failed to process news articles using the LLM pipeline.",
+                "error": str(e),
+            },
+        )
+
+    return {
+        "success": True,
+        "message": "News articles successfully retrieved and processed.",
+        "data": processed_news,
+    }
