@@ -48,8 +48,4 @@ async def get_articles(
             },
         )
 
-    return {
-        "success": True,
-        "message": "News articles successfully retrieved and processed.",
-        "data": processed_news,
-    }
+    return processed_news
