@@ -53,7 +53,9 @@ class NewsIngestionPipeline:
                 "content": article.content,
                 "published_at": article.published_at,
             }
-            for article in recent_articles
+            for article in recent_articles[
+                :50
+            ]  # Limit to 50 articles only due to only free model is used to process the articles
         ]
 
         return mapped_articles
