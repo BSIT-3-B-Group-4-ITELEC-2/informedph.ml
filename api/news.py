@@ -23,29 +23,19 @@ async def get_articles(
     try:
         articles = await ingestion_pipeline.execute()
 
-        print("Article Count: ", len(articles))
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail={
-                "success": False,
-                "message": "Failed to retrieve news articles.",
-                "error": str(e),
-            },
+        print(
+            f"News ingestion pipeline has successfully retrieve {len(articles)} articles"
         )
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        raise HTTPException(status_code=500)
 
     try:
         processed_news = await llm_pipeline.execute(articles)
 
-        print("Processed Articles: ", processed_news)
+        print("News LLM Pipeline has successfully processed the articles")
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail={
-                "success": False,
-                "message": "Failed to process news articles using the LLM pipeline.",
-                "error": str(e),
-            },
-        )
+        print(f"Error: {str(e)}")
+        raise HTTPException(status_code=500)
 
     return processed_news
